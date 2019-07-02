@@ -1,11 +1,8 @@
-#path = '/home/marvin/Desktop/LPTHY/dsgdb9nsd_000003.txt'
-
-#file = open(path, 'r')
-#days = file.read()
+#importar openbabel
+import openbabel
 
 
 # escreve n arquivos com a_n.xyz nomes
-
 n = 1
 while n <= 10:
 
