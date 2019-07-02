@@ -14,3 +14,5 @@
 > cd build
 > cmake .. -DPYTHON_BINDINGS=ON -DRUN_SWIG=ON -DCMAKE_INSTALL_PREFIX=~/anaconda3 -DPYTHON_INCLUDE_DIR=~/anaconda3/include/python3.7m/ -DCMAKE_LIBRARY_PATH=~/anaconda3/lib -DSWIG_DIR=~/anaconda3/share/swig/3.0.12/ -DSWIG_EXECUTABLE=~/anaconda3/bin/swig -DPYTHON_LIBRARY=~/anaconda3/lib/libpython3.7m.so
 > make && make install
+
+# tentar pip install openbabel so
