@@ -20,21 +20,3 @@ while (n < len(smile)):
 	output.write(xyz)
 	n+=1;
 
-# escreve n arquivos com a_n.xyz nomes
-#n = 1
-#while n <= 10:
-
-	#caminho ate a pasta onde ficara o arquivo
-#	path = '/home/marvin/Desktop/LPTHY/a_{}.xyz'.format(n)
-
-	#abrir o arquivo especificado e escrever
-#	mymol = open(path, 'w')
-
-	#colocar infos que quer digitar no arquivo
-#	write = 'a \n {}'.format(n)
-
-	#digitar a variavel write no arquivo
-#	mymol.write(write)
-
-	#aumentar o contador em 1
-#	n += 1
