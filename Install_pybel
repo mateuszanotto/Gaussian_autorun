@@ -3,6 +3,7 @@
 
 2. instalar cmake, lxml, swig
 > conda install cmake lxml swig
+> export PATH=~/anaconda3/bin:$PATH
 
 3. Baixar openbabel 2.5.x - github - https://github.com/openbabel
 
