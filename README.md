@@ -4,3 +4,6 @@ Este projeto é dedicado a criação de um banco de dados contendo informações
 
 # prototype1.py
 script para puxar {n} SMILEs e criar {n} arquivos .xyz
+
+# install_pybel
+instruções para instalar o openbabel com python3 no linux
