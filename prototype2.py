@@ -6,6 +6,8 @@
 #	mateus m z toledo				 #
 ######################################
 
+### tentar fazer o xyz virar um input em .com
+
 # importar openbabel
 import openbabel
 from openbabel import pybel
@@ -26,24 +28,19 @@ while (n < len(Smiles)):
     xyz.make3D(forcefield='mmff94', steps=50)
 
     # salva o smile em formato xyz
-    output = pybel.Outputfile('xyz', 'xyz/a_{}.xyz'.format(n), overwrite=True)
+    output = pybel.Outputfile('xyz', 'input/input_{}.com'.format(n), overwrite=True)
     output.write(xyz)
 
+    with open('input/input_{}.com'.format(n), 'r') as file:
+        lines = file.readlines()
+
+    with open('input/input_{}.com'.format(n), 'w') as file:
+        lines[0] = '%nprocs = 8 \n%mem = 16GB \n%chk=molecule_{}.chk \n# opt freq b3lyp/6-31g(d,p) \n\ninput {}\n\n'.format(n, n)
+        lines[1] = '0 1\n'
+        file.writelines(lines)
+
     # adiciona o smile ao fim do arquivo .xyz
-    with open('xyz/a_{}.xyz'.format(n), 'a') as file:
-        fingerprint = str(xyz.calcfp())
-        file.write(fingerprint)
+    with open('input/input_{}.com'.format(n), 'a') as file:
         file.write("\n")
-        file.write(smi)
 
         n += 1;
-
-#escreve nos arquivos fora do contador n
-
-
-i = 0
-while (i < len(Smiles)):
-    with open('xyz/a_{}.xyz'.format(i), 'a') as file:
-        file.write("oi")
-
-        i += 1;
