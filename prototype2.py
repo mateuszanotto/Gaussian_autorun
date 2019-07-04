@@ -1,46 +1,43 @@
-#####################################
-#									 #
-#									 #
-#			mestrado				 #
-#									 #
-#	mateus m z toledo				 #
+######################################
+#              mestrado              #
+#             julho 2019             #
+#       smile -> input gaussian      #
+#                                    #
+#           mateus m z toledo        #
 ######################################
 
-### tentar fazer o xyz virar um input em .com
 
 # importar openbabel
 import openbabel
 from openbabel import pybel
 
-# pega o arquivo smile.txt e transforma em um module de strings
-# o arquivo .txt não pode ter linha em branco no final
+# transforma cada linha do smiles.txt num item de uma lista. O arquivo smiles.txt NÃO pode ter linha em branco no final
 with open('smiles.txt', 'r') as file:
-    # para pegar as linhas com aaa\n usar file.readlines()
-    Smiles = file.read().splitlines()
+	Smiles = file.read().splitlines() # para pegar as linhas com 'aaa\n' usar file.readlines()
 
 # escreve n arquivos onde n eh a quantidade de smiles no arquivo smiles.txt
 n = 0
 while (n < len(Smiles)):
-    # le o smile[n], transforma em smile e salva em xyz
-    xyz = pybel.readstring('smi', Smiles[n])
-    smi = str(xyz)  # pega o smile atual e faz uma string para salvar depois
-    # transforma o smile no xyz e deixa 3d
-    xyz.make3D(forcefield='mmff94', steps=50)
+	smibabel = pybel.readstring('smi', Smiles[n]) # transforma o Smiles[n] em um smile compativel com babel
+	smi = str(smibabel)  # pega o smile e faz uma string para salvar depois
+	smibabel.make3D(forcefield='mmff94', steps=50) # deixa o smile 3d
 
-    # salva o smile em formato xyz
-    output = pybel.Outputfile('xyz', 'input/input_{}.com'.format(n), overwrite=True)
-    output.write(xyz)
+    # salva a molecula 3d em formato xyz
+	output = pybel.Outputfile('xyz', 'input/input_{}.com'.format(n), overwrite=True)
+	output.write(smibabel)
 
-    with open('input/input_{}.com'.format(n), 'r') as file:
-        lines = file.readlines()
+	# salva as linhas do .com numa lista
+	with open('input/input_{}.com'.format(n), 'r') as file:
+		lines = file.readlines()
 
-    with open('input/input_{}.com'.format(n), 'w') as file:
-        lines[0] = '%nprocs = 8 \n%mem = 16GB \n%chk=molecule_{}.chk \n# opt freq b3lyp/6-31g(d,p) \n\ninput {}\n\n'.format(n, n)
-        lines[1] = '0 1\n'
-        file.writelines(lines)
+	# adiciona os inputs do gaussian no .com
+	with open('input/input_{}.com'.format(n), 'w') as file:
+		lines[0] = '%nprocs=8 \n%mem=16GB \n%chk=molecule_{}.chk \n#opt freq b3lyp/6-31g(d,p) \n\ninput {}\n\n'.format(n, n) # processadores, memoria, chk, input e nome
+		lines[1] = '0 1\n' # multiplicidade e carga
+		file.writelines(lines) #sobrescreve as linhas 0 e 1 com as infos acima
 
-    # adiciona o smile ao fim do arquivo .xyz
-    with open('input/input_{}.com'.format(n), 'a') as file:
-        file.write("\n")
+    # adiciona algo ao fim do arquivo .com
+	with open('input/input_{}.com'.format(n), 'a') as file:
+ 		file.write("\n") # linha em branco (necessário pro input do gaussian)
 
-        n += 1;
+	n += 1;
