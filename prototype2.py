@@ -22,7 +22,7 @@ while (n < len(Smiles)):
 	smi = str(smibabel)  # pega o smile e faz uma string para salvar depois
 	smibabel.make3D(forcefield='mmff94', steps=50) # deixa o smile 3d
 
-    # salva a molecula 3d em formato xyz
+   	 # salva a molecula 3d em formato xyz
 	output = pybel.Outputfile('xyz', 'input/input_{}.com'.format(n), overwrite=True)
 	output.write(smibabel)
 
