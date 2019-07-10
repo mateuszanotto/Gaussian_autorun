@@ -2,7 +2,7 @@
 #              mestrado              #
 #             julho 2019             #
 #       smile -> input gaussian      #
-#               patch 3              #
+#               patch 0.1            #
 #           mateus m z toledo        #
 ######################################
 
