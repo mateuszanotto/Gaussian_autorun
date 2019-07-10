@@ -75,3 +75,6 @@ while (i < len(Smiles)):
 	i += 1;
 
 #############
+
+#j = 0
+#while (j < len(Smiles)):
