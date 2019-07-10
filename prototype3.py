@@ -2,7 +2,7 @@
 #              mestrado              #
 #             julho 2019             #
 #       smile -> input gaussian      #
-#                                    #
+#               patch 3              #
 #           mateus m z toledo        #
 ######################################
 
@@ -18,7 +18,7 @@ with open('smiles.txt', 'r') as file:
 	Smiles = file.read().splitlines() # para pegar as linhas com 'aaa\n' usar file.readlines()
 
 # Define o caminho ate o script
-path = Path('~/github/db_singletoxygen-master')
+path = Path('~/github/db_singletoxygen')
 
 # escreve n arquivos onde n eh a quantidade de smiles no arquivo smiles.txt
 n = 0
@@ -56,8 +56,6 @@ while (n < len(Smiles)):
 #############
 i = 0
 while (i < len(Smiles)):
-	word = 'Normal Termination'
-	normalterm = 0
 	if Path('{}/log/molecule_{}.log'.format(path, i)).is_file() is True: # verifica se o .log existe ################## dando erro, entrando se o arquivo NAO EXISTE
 
 		# checa se o .log tem 0, 1 ou 2 normal terminations
