@@ -37,7 +37,7 @@ while (n < len(Smiles)):
 
 	# adiciona os inputs do gaussian no .com
 	with open('input/input_{}.com'.format(n), 'w') as file:
-		lines[0] = '%nprocs=8 \n%mem=16GB \n%chk={path}/chk/molecule_{n} \n#opt freq blyp/6-31g(d,p) \n\nmolecule_{n} {smi}\n\n'.format(path=path , n=n, smi=smi) # processadores, memoria, chk, input e nome(molecule_No Smile)  \n%chk={}/log/molecule_{}.chk
+		lines[0] = '%nprocs=8 \n%mem=16GB \n%chk={path}/chk/molecule_{n}.chk \n#opt freq blyp/6-31g(d,p) \n\nmolecule_{n} {smi}\n\n'.format(path=path , n=n, smi=smi) # processadores, memoria, chk, input e nome(molecule_No Smile)  \n%chk={}/log/molecule_{}.chk
 		lines[1] = '0 1\n' # multiplicidade e carga
 		file.writelines(lines) #sobrescreve as linhas 0 e 1 com as infos acima
 
