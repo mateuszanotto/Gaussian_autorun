@@ -1,0 +1,17 @@
+Class,SMILE,Alt name,Name,Solvent,OxQauntumYeild,Wavelength,ISCYield,QYield/ISC,Method
+Angelicins,CC(=O)c3cc2ccc1occc1c2oc3=O,AAng,3-Aceto-Angelicin,C6H6,"0,4",355,"0,54","0,73",TRIL
+Angelicins,C1=CC2=C(C=CO2)C3=C1C=CC(=O)O3,Ang,Angelicin,C6H6,"0,01",355,"0,03","0,33",TRIL
+Angelicins,CC1=CC2=C(C3=C(C=C2)OC=C3C)OC1=O,"3,4'-DMA","3,4'-Dimethyl angelicin",C6H6,"0,02",347,"0,02","1,0",TRIL
+Angelicins,CC1=CC(=O)OC2=C1C=CC3=C2C(=CO3)C,"4,4'-DMA","4,4'-Dimethyl angelicin",C6H6,"0,02",355,"0,11","0,18",TRIL
+Angelicins,CC1=CC(=O)OC2=C1C=CC3=C2C=C(O3)C,"4,5'-DMA","4,5'-Dimethyl angelicin",C6H6,"0,02",355,"0,08","0,25",TRIL
+Angelicins,Cc3oc2ccc1ccc(=O)oc1c2c3C,"4',5'-DMA","4',5'-Dimethyl angelicin",C6H6,"0,03",347,"0,08","0,38",TRIL
+Angelicins,Cc2coc3c(C)cc1ccc(=O)oc1c23,"6,4'-DMA","6,4'-Dimethyl angelicin",C6H6,"0,01",355,"0,07","0,14",TRIL
+Angelicins,Cc3oc2ccc1c(C)cc(=O)oc1c2c3C,"4,4',5'-TMA","4,4',5'-Trimethyl angelicin",C6H6,"0,05",347,"0,11","0,45",TRIL
+Angelicins,Cc1cc(=O)oc3c1ccc2sc(C)c(C)c23, ,"4,4',5'-Trimethyl-1'-thioangelicin",C6H6,"0,28",347,"0,47","0,60",TRIL
+Angelicins,Cc1cc(=O)oc2c1cc(C)c3scc(C)c23, ,"4,6,4'-trimethyl-1'-thioangelicin",C6H6,"0,20",347,"0,39","0,51",TRIL
+Angelicins,CC1=CC(=O)OC2=C3C(=COC3=C(C=C12)C)C,"4,6,4'-TMA","4,6,4'-trimethyl angelicin",C6H6,"0,042",347,"0,10","0,42",TRIL
+Angelicins,Cc3cc2c1oc(=O)cc(C)c1cc(C)c2s3, ,"4,6,5'-trimethyl-1'-thioangelicin",C6H6,"0,25",347,"0,46","0,54",TRIL
+Angelicins,CC1=CC2=C(C3=C1OC=C3C)OC(=O)C=C2C,"6,4,4'-TMA","6,4,4'-trimethyl angelicin",C6H6,"0,02",355,"0,13","0,16",TRIL
+Angelicins,Cc3oc2c(C)cc1ccc(=O)oc1c2c3C,"6,4',5'-TMA","6,4',5'-trimethyl angelicin",C6H6,"0,04",347,"0,09","0,44",TRIL
+Angelicins,Cc3cc2c1oc(=O)cc(C)c1cc(C)c2s3,,"4,6,4',5'-tetramethyl-1'-thioangelicin",C6H6,"0,25",347,"0,39","0,64",TRIL
+Angelicins,Cc3oc2c(C)cc1c(C)cc(=O)oc1c2c3C,"4,6,4',5'-TeMA","4,6,4',5'-tetramethyl angelicin",C6H6,"0,09",347,"0,24","0,38",TRIL
