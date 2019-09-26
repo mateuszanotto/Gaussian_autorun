@@ -1,9 +1,9 @@
 %nprocs=8 
 %mem=16GB 
-%chk=/home/mateus/github/db_singletoxygen/chk/moleculeA_1.chk 
+%chk=/home/mateus/github/db_singletoxygen/chk/molecule_1.chk 
 #opt freq blyp/6-31g(d,p) 
 
-moleculeA_1 c1cc2c(cco2)c2c1ccc(=O)o2	
+molecule_1 c1cc2c(cco2)c2c1ccc(=O)o2	
 
 
 0 1

@@ -21,8 +21,7 @@ with open('smiles.txt', 'r') as file:
 path = Path('/home/mateus/github/db_singletoxygen')
 
 # escreve n arquivos onde n eh a quantidade de smiles no arquivo smiles.txt
-n = 0
-while (n < len(Smiles)):
+for n in range(len(Smiles)):
 	smibabel = pybel.readstring('smi', Smiles[n]) # transforma o Smiles[n] em um smile compativel com babel
 	smi = str(smibabel)  # pega o smile e faz uma string para salvar depois
 	smibabel.make3D(forcefield='mmff94', steps=50) # deixa o smile 3d
@@ -51,11 +50,9 @@ while (n < len(Smiles)):
 
 	subprocess.run('chmod a+x {}/input/job_{}.sh'.format(path, n), shell=True)
 
-	n += 1;
-
 #############
-i = 0
-while (i < len(Smiles)):
+
+for i in range(len(Smiles)):
 	# checa se o .log tem 0, 1 ou 2 normal terminations
 	try:
 		with open('{}/log/molecule_{}.log'.format(path, i), 'r') as file:
@@ -71,8 +68,6 @@ while (i < len(Smiles)):
 	except FileNotFoundError:
 		print('Rodando Molecula {}'.format(i)) # aviso no terminal
 		subprocess.call('{}/input/job_{}.sh'.format(str(path), i), shell=True) # rodar job se o .log n existir
-
-	i += 1;
 
 #############
 
