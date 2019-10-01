@@ -37,7 +37,7 @@ for n in range(len(Smiles)):
 
 	# adiciona os inputs do gaussian no .com
 	with open('input/input_{}.com'.format(n), 'w') as file:
-		lines[0] = '%nprocs=8 \n%mem=16GB \n%chk={path}/chk/molecule_{n}.chk \n#opt freq blyp/6-31g(d,p) \n\nmolecule_{n} {smi}\n\n'.format(path=path , n=n, smi=smi) # processadores, memoria, chk, input e nome(molecule_No Smile)  \n%chk={}/log/molecule_{}.chk
+		lines[0] = '%nprocs=8 \n%mem=16GB \n%chk={path}/chk/molecule_{n}.chk \n#opt freq b3lyp/6-31g(d) \n\nmolecule_{n} {smi}\n'.format(path=path , n=n, smi=smi) # processadores, memoria, chk, input e nome(molecule_No Smile)  \n%chk={}/log/molecule_{}.chk
 		lines[1] = '0 1\n' # multiplicidade e carga
 		file.writelines(lines) #sobrescreve as linhas 0 e 1 com as infos acima
 
@@ -56,17 +56,15 @@ for n in range(len(Smiles)):
 for i in range(len(Smiles)):
 	# checa se o .log tem 0, 1 ou 2 normal terminations
 	try:
-		a = si.Smile_Interpreter()
-		print(a.NormalTerm)
-#		with open('{}/log/molecule_{}.log'.format(path, i), 'r') as file:
-#			normterm = str(file.readlines())
-#			ntcounter = len(list(re.finditer('Normal termination of Gaussian 09', normterm)))
-#			if ntcounter == 0: # 0 normal termination = erro opt
-#				print('Molecula {} opt error termination'.format(i));
-#			if ntcounter == 1: # 1 normal termination = erro freq
-#				print('Molecula {} freq error termination'.format(i));
-#			elif ntcounter == 2:
-#				None # 2 normal termination = normal
+		with open('{}/log/molecule_{}.log'.format(path, i), 'r') as file:
+			normterm = str(file.readlines())
+			ntcounter = len(list(re.finditer('Normal termination of Gaussian 09', normterm)))
+			if ntcounter == 0: # 0 normal termination = erro opt
+				print('Molecula {} opt error termination'.format(i));
+			if ntcounter == 1: # 1 normal termination = erro freq
+				print('Molecula {} freq error termination'.format(i));
+			elif ntcounter == 2:
+				None # 2 normal termination = normal
 
 	except FileNotFoundError:
 		print('Rodando Molecula {}'.format(i)) # aviso no terminal
