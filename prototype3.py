@@ -12,6 +12,7 @@ from openbabel import pybel
 from pathlib import Path
 import subprocess
 import re
+import Smile_Interpreter as si
 
 # transforma cada linha do smiles.txt num item de uma lista. O arquivo smiles.txt NAO pode ter linha em branco no final
 with open('smiles.txt', 'r') as file:
@@ -55,21 +56,18 @@ for n in range(len(Smiles)):
 for i in range(len(Smiles)):
 	# checa se o .log tem 0, 1 ou 2 normal terminations
 	try:
-		with open('{}/log/molecule_{}.log'.format(path, i), 'r') as file:
-			normterm = str(file.readlines())
-			ntcounter = len(list(re.finditer('Normal termination of Gaussian 09', normterm)))
-			if ntcounter == 0: # 0 normal termination = erro opt
-				print('Molecula {} opt error termination'.format(i));
-			if ntcounter == 1: # 1 normal termination = erro freq
-				print('Molecula {} freq error termination'.format(i));
-			elif ntcounter == 2:
-				None # 2 normal termination = normal
+		a = si.Smile_Interpreter()
+		print(a.NormalTerm)
+#		with open('{}/log/molecule_{}.log'.format(path, i), 'r') as file:
+#			normterm = str(file.readlines())
+#			ntcounter = len(list(re.finditer('Normal termination of Gaussian 09', normterm)))
+#			if ntcounter == 0: # 0 normal termination = erro opt
+#				print('Molecula {} opt error termination'.format(i));
+#			if ntcounter == 1: # 1 normal termination = erro freq
+#				print('Molecula {} freq error termination'.format(i));
+#			elif ntcounter == 2:
+#				None # 2 normal termination = normal
 
 	except FileNotFoundError:
 		print('Rodando Molecula {}'.format(i)) # aviso no terminal
 		subprocess.call('{}/input/job_{}.sh'.format(str(path), i), shell=True) # rodar job se o .log n existir
-
-#############
-
-#j = 0
-#while (j < len(Smiles)):
