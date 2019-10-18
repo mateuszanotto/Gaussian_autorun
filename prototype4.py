@@ -13,7 +13,7 @@ import os
 
 ## define o caminho até a pasta e o cálculo
 path = os.getcwd()
-typeCalc = 'opt'
+name = 'opt'
 calc = ['8', #processadores
         '16', #memoria em GB
         '#p opt b3lyp/6-31g(d)'] # calculo
@@ -34,7 +34,7 @@ calc = ['8', #processadores
         '#p freq b3lyp/6-31g(d)'] # calculo
 
 
-opt = ga.Gaussian_autorun(path, name, calc)
-opt.Inputs()
-opt.Run()
-opt.Error()
+freq = ga.Gaussian_autorun(path, name, calc)
+freq.Inputs()
+freq.Run()
+freq.Error()

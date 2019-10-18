@@ -33,7 +33,7 @@ class Gaussian_autorun():
         self.calc = calc
         self.normal = []
         self.error = []
-        if (path) != None):
+        if (path != None):
             with open('{}/smiles.txt'.format(path), 'r') as file:
                 self.smiles = file.read().splitlines()
 
@@ -53,7 +53,10 @@ class Gaussian_autorun():
 
             try:
                 os.mkdir(self.path+"/input")
-            finally:
+            except FileExistsError:
+                output = pybel.Outputfile('xyz', 'input/{self}_input_{n}.com'.format(self=self.name, n=n), overwrite=True)
+                output.write(smi)
+            else:
                 output = pybel.Outputfile('xyz', 'input/{self}_input_{n}.com'.format(self=self.name, n=n), overwrite=True)
                 output.write(smi)
 
@@ -80,7 +83,15 @@ g09 < {self}_input_{n}.com > {path}/log/{self}_molecule_{n}.log'''.format(self=s
             try:
                 os.mkdir(self.path+"/log")
                 os.mkdir(self.path+"/chk")
-            finally:
+            except FileExistsError:
+                try:
+                    open('{path}/log/{self}_molecule_{n}.log'.format(path=self.path, self=self.name,  n=n), 'r')
+                    ### da pra colocar por aqui pra ver se o Smile ta igual
+                    ### tentar por um SIM ou NÃO
+                except FileNotFoundError:
+                    print('\nRunning {self} calculation - Molecule {n}'.format(self=self.name, n=n)) # aviso no terminal
+                    subprocess.call('{path}/input/{self}_job_{n}.sh'.format(path=self.path, self=self.name,  n=n), shell=True) # rodar job se o .log n existir
+            else:
                 try:
                     open('{path}/log/{self}_molecule_{n}.log'.format(path=self.path, self=self.name,  n=n), 'r')
                     ### da pra colocar por aqui pra ver se o Smile ta igual
@@ -89,14 +100,16 @@ g09 < {self}_input_{n}.com > {path}/log/{self}_molecule_{n}.log'''.format(self=s
                     print('\nRunning {self} calculation - Molecule {n}'.format(self=self.name, n=n)) # aviso no terminal
                     subprocess.call('{path}/input/{self}_job_{n}.sh'.format(path=self.path, self=self.name,  n=n), shell=True) # rodar job se o .log n existir
 
+
     def Error(self):
         for n in range(len(self.smiles)):
             with open('{path}/log/{self}_molecule_{n}.log'.format(path=self.path, self=self.name,  n=n), 'r') as file:
                 normterm = str(file.readlines())
                 self.normal.append(len(list(re.finditer('Normal termination of Gaussian 09', normterm))))
+                self.error.append(len(list(re.finditer('Error termination', normterm))))
                 if self.normal==0:
                     print('\nMolecule {n} error termination'.format(n=n))
-        if sum(self.normal)==0:
+        if sum(self.error)==0:
             print('\n- No {self} error termination -\n'.format(self=self.name))
 #            print('List of {self} Normal terminations: \n'.format(self=self.name)+ str(self.normal))
         elif sum(self.normal)!=len(self.normal):
@@ -105,6 +118,6 @@ g09 < {self}_input_{n}.com > {path}/log/{self}_molecule_{n}.log'''.format(self=s
             for n in range(len(self.smiles)):
                 if self.normal[n]==0:
                     print('Molecule {n} ERROR termination'.format(n=n))
-            print('┬─┬ノ(ಠ_ಠノ)')
+            print('\n┬─┬ノ(ಠ_ಠノ)')
         elif sum(self.normal)==len(self.normal):
-            print('{self} Normal terminated ʕᵔᴥᵔʔ\n '.format(self=self.name))
+            print('\n {self} Normal terminated ʕᵔᴥᵔʔ\n '.format(self=self.name))
