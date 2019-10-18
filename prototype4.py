@@ -6,13 +6,14 @@
 #           mateus m z toledo        #
 ######################################
 
-
+import openbabel
+from openbabel import pybel
 import Gaussian_autorun as ga
 from pathlib import Path
 import os
+path = os.getcwd()
 
 ## define o caminho até a pasta e o cálculo
-path = os.getcwd()
 name = 'opt'
 calc = ['8', #processadores
         '16', #memoria em GB
@@ -20,14 +21,18 @@ calc = ['8', #processadores
 
 
 opt = ga.Gaussian_autorun(path, name, calc)
-opt.Inputs()
-opt.Run()
-opt.Error()
+#opt.Inputs()
+#opt.Run()
+#opt.Error()
+opt.test()
+mymol = pybel.readstring("smi", "CC")
 
-#-----------------------------------------#
+mol = pybel.Molecule(pybel.readfile("g09", "{}/log/opt_molecule_0.log".format(path)))
+
+print(mol.formula())
+print('--------------------------------------------')
 
 ## define o caminho até a pasta e o cálculo
-path = os.getcwd()
 name = 'freq' #nome no começo do arquivo
 calc = ['8', #processadores
         '16', #memoria em GB
@@ -35,6 +40,7 @@ calc = ['8', #processadores
 
 
 freq = ga.Gaussian_autorun(path, name, calc)
-freq.Inputs()
-freq.Run()
-freq.Error()
+#freq.Inputs()
+#freq.Run()
+#freq.Error()
+#freq.test()

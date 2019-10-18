@@ -1,5 +1,6 @@
 0.1 tentar via pip
-> pip install openbabel
+> python3 -m pip install openbabel
+> python3 -m pip install pybel
 
 1. instalar Anaconta python3.7 - https://www.anaconda.com/distribution/#download-section
 > bash Anaconda3-2019.03-Linux-86x_64.sh

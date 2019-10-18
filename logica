@@ -1,0 +1,7 @@
+se existir opt.Log
+  sim: ver se ta normal termination
+    sim: pegar estrutura do opt e criar o arquivo
+    não: error (opt error)
+  não: ver se tem opt no cabeçalho
+    sim: rodar
+    não: error (precisa fazer opt)
