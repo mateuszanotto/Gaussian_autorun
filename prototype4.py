@@ -22,10 +22,10 @@ calc = ['8', #processadores
 
 opt = ga.Gaussian_autorun(path, name, calc)
 opt.OptInputs() #cria o arquivo a partir do smile e otimiza, NÃO usar OtherInputs()
-opt.Run()
+opt.Run() #so funciona se não tiver .log
 opt.Error()
 
-print('--------------------------------------------')
+print('==============================')
 
 name = 'freq' #nome no começo do arquivo
 calc = ['8', #processadores
@@ -38,7 +38,7 @@ freq.OtherInputs() #cria o arquivo a partir da estrutura otimizada, NÃO usar Op
 freq.Run()
 freq.Error()
 
-print('--------------------------------------------')
+print('==============================')
 
 name = 'sp' #nome no começo do arquivo
 calc = ['8', #processadores
@@ -50,4 +50,3 @@ sp = ga.Gaussian_autorun(path, name, calc)
 sp.OtherInputs() #cria o arquivo a partir da estrutura otimizada, NÃO usar OptInputs()
 sp.Run()
 sp.Error()
-print(sp.aa)

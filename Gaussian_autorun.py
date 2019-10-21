@@ -81,7 +81,8 @@ class Gaussian_autorun():
             with open('input/{name}_job_{n}.sh'.format(name=self.name, n=n), 'w') as file:
                 file.write('''#!/bin/bash
 cd {path}/input
-g09 < {name}_input_{n}.com > {path}/log/{name}_molecule_{n}.log'''.format(name=self.name, path=self.path, n=n))
+g09 < {name}_input_{n}.com > {path}/log/{name}_molecule_{n}.log &&
+formchk {path}/chk/{name}_molecule_{n}.chk && rm {path}/chk/{name}_molecule_{n}.chk'''.format(name=self.name, path=self.path, n=n))
             subprocess.run('chmod a+x {path}/input/{name}_job_{n}.sh'.format(name=self.name, path=self.path, n=n), shell=True) # cria input.com e job.sh
 
     def OtherInputs(self):
@@ -111,7 +112,8 @@ g09 < {name}_input_{n}.com > {path}/log/{name}_molecule_{n}.log'''.format(name=s
             with open('input/{name}_job_{n}.sh'.format(name=self.name, n=n), 'w') as file:
                 file.write('''#!/bin/bash
 cd {path}/input
-g09 < {name}_input_{n}.com > {path}/log/{name}_molecule_{n}.log'''.format(name=self.name, path=self.path, n=n))
+g09 < {name}_input_{n}.com > {path}/log/{name}_molecule_{n}.log &&
+formchk {path}/chk/{name}_molecule_{n}.chk && rm {path}/chk/{name}_molecule_{n}.chk'''.format(name=self.name, path=self.path, n=n))
             subprocess.run('chmod a+x {path}/input/{name}_job_{n}.sh'.format(name=self.name, path=self.path, n=n), shell=True) # cria input.com e job.sh
 
     def Run(self):
