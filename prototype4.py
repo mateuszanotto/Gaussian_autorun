@@ -6,7 +6,7 @@
 #           mateus m z toledo        #
 ######################################
 
-import openbabel
+import openbabel as ob
 from openbabel import pybel
 import Gaussian_autorun as ga
 from pathlib import Path
@@ -21,18 +21,12 @@ calc = ['8', #processadores
 
 
 opt = ga.Gaussian_autorun(path, name, calc)
-#opt.Inputs()
-#opt.Run()
-#opt.Error()
-opt.test()
-mymol = pybel.readstring("smi", "CC")
+opt.OptInputs() #cria o arquivo a partir do smile e otimiza, NÃO usar OtherInputs()
+opt.Run()
+opt.Error()
 
-mol = pybel.Molecule(pybel.readfile("g09", "{}/log/opt_molecule_0.log".format(path)))
-
-print(mol.formula())
 print('--------------------------------------------')
 
-## define o caminho até a pasta e o cálculo
 name = 'freq' #nome no começo do arquivo
 calc = ['8', #processadores
         '16', #memoria em GB
@@ -40,8 +34,20 @@ calc = ['8', #processadores
 
 
 freq = ga.Gaussian_autorun(path, name, calc)
-#freq.Inputs()
-#freq.Run()
-#freq.Error()
-#freq.test()
-freq.test()
+freq.OtherInputs() #cria o arquivo a partir da estrutura otimizada, NÃO usar OptInputs()
+freq.Run()
+freq.Error()
+
+print('--------------------------------------------')
+
+name = 'sp' #nome no começo do arquivo
+calc = ['8', #processadores
+        '16', #memoria em GB
+        '#p sp mp2/6-31g(d)'] # calculo
+
+
+sp = ga.Gaussian_autorun(path, name, calc)
+sp.OtherInputs() #cria o arquivo a partir da estrutura otimizada, NÃO usar OptInputs()
+sp.Run()
+sp.Error()
+print(sp.aa)

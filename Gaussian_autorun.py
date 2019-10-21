@@ -1,4 +1,4 @@
-import openbabel
+import openbabel as ob
 import sys
 #print('Python version:{}'.format(sys.version))
 from openbabel import pybel #[N.M. O’Boyle, C. Morley and G.R. Hutchison. Pybel: a Python wrapper for the OpenBabel cheminformatics toolkit. Chem. Cent. J. 2008, 2, 5.]
@@ -35,6 +35,12 @@ class Gaussian_autorun():
         self.normal = []
         self.error = []
         self.smiles = list(pybel.readfile('smi', '{}/smiles.smi'.format(path)))
+        # self.header = ['%nprocs={calc[0]}'.format(calc=self.calc),
+        #                 '%mem={calc[1]}GB'.format(calc=self.calc),
+        #                 '%chk={path}/chk/{name}_molecule_{n}.chk'.format(name=self.name, path=self.path , n=n) #essa linha vai dar bosta por causa do n
+        #                 '{calc[2]}'.format(calc=self.calc),
+        #                 '\nmolecule_{n} {smi}'.format(n=n, smi=self.smiles[n]), #essa linha vai dar bosta por causa do n
+        #                 '0 1']
 
     def __str__(self):
         '''Give a string if the object is printed
@@ -43,7 +49,7 @@ class Gaussian_autorun():
         x+='\n'+str(self.smiles)
         return x
 
-    def Inputs(self):
+    def OptInputs(self):
         '''turn smiles.smi into 3D structures and save in a file
         '''
         for n in range(len(self.smiles)):
@@ -53,11 +59,11 @@ class Gaussian_autorun():
             try:
                 os.mkdir(self.path+"/input")
             except FileExistsError:
-                output = pybel.Outputfile('xyz', 'input/{name}_input_{n}.com'.format(name=self.name, n=n), overwrite=True)
-                output.write(smi)
-            else:
-                output = pybel.Outputfile('xyz', 'input/{name}_input_{n}.com'.format(name=self.name, n=n), overwrite=True)
-                output.write(smi)
+                  output = pybel.Outputfile('xyz', 'input/{name}_input_{n}.com'.format(name=self.name, n=n), overwrite=True)
+                  output.write(smi)
+            finally:
+                 output = pybel.Outputfile('xyz', 'input/{name}_input_{n}.com'.format(name=self.name, n=n), overwrite=True)
+                 output.write(smi)
 
             with open('input/{name}_input_{n}.com'.format(name=self.name, n=n), 'r') as file:
                 lines = file.readlines()
@@ -71,6 +77,36 @@ class Gaussian_autorun():
                 lines[-1] += '\n'
                 file.writelines(lines)
                 file.close()
+            with open('input/{name}_job_{n}.sh'.format(name=self.name, n=n), 'w') as file:
+                file.write('''#!/bin/bash
+cd {path}/input
+g09 < {name}_input_{n}.com > {path}/log/{name}_molecule_{n}.log'''.format(name=self.name, path=self.path, n=n))
+            subprocess.run('chmod a+x {path}/input/{name}_job_{n}.sh'.format(name=self.name, path=self.path, n=n), shell=True) # cria input.com e job.sh
+
+    def OtherInputs(self):
+        '''turn optmized structures into inputs
+        #https://open-babel.readthedocs.io/en/latest/UseTheLibrary/PythonExamples.html
+        '''
+        for n in range(len(self.smiles)):
+            for molecule in pybel.readfile('g09', '{path}/log/opt_molecule_{n}.log'.format(path=self.path, name=self.name, n=n)):
+                #print(molecule.molwt) molecule weigth mass
+                output = pybel.Outputfile('xyz', 'input/{name}_input_{n}.com'.format(name=self.name, n=n), overwrite=True)
+                output.write(molecule)
+
+            with open('input/{name}_input_{n}.com'.format(name=self.name, n=n), 'r') as file:
+                lines = file.readlines()
+            with open('input/{name}_input_{n}.com'.format(name=self.name, n=n), 'w') as file:
+                lines[1] = '\n'
+                lines[0] = '''%nprocs={calc[0]}
+%mem={calc[1]}GB
+%chk={path}/chk/{name}_molecule_{n}.chk
+{calc[2]}
+\nmolecule_{n} {smi}
+0 1'''.format(name=self.name, calc=self.calc, path=self.path , n=n, smi=self.smiles[n])
+                lines[-1] += '\n'
+                file.writelines(lines)
+                file.close()
+
             with open('input/{name}_job_{n}.sh'.format(name=self.name, n=n), 'w') as file:
                 file.write('''#!/bin/bash
 cd {path}/input
@@ -120,7 +156,6 @@ g09 < {name}_input_{n}.com > {path}/log/{name}_molecule_{n}.log'''.format(name=s
 
     #def LogRead(self, infos): # lê as infos no .log e salva em um arquivo
 
-
     #def LogtoSmi(self):
     #    for n in range(len(self.smiles)):
     #        molecule = readfile('log', '{path}/log/{name}_molecule_{n}.log'.format(path=self.path, name=self.name, n=n))
@@ -130,13 +165,6 @@ g09 < {name}_input_{n}.com > {path}/log/{name}_molecule_{n}.log'''.format(name=s
     #            print('a')
     #        else
     #            None
-
-    def test(self):
-        if self.name != 'opt'
-            for n in range(len(self.smiles)):
-                opt_xyz = (pybel.readfile('log', '{path}/log/{name}_molecule_{n}.log'.format(path=self.path, name=self.name, n=n)))
-                output = pybel.Outputfile('xyz', 'input/{name}_input_{n}.com'.format(name=self.name, n=n), overwrite=True)
-                output.write(opt_xyz)
 
     def compare(self, other):
         try:
