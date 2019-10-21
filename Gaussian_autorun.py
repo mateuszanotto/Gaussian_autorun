@@ -13,7 +13,8 @@ import os
 #import pandas as pd
 #print('pandas version:{}'.format(pd.__version__))
 
-#https://openbabel.org/docs/dev/UseTheLibrary/Python_Pybel.html
+'''https://openbabel.org/docs/dev/UseTheLibrary/Python_Pybel.html'''
+
 class Gaussian_autorun():
     '''This class turn smiles into inputs, runs Gaussian and create an database
     '''
