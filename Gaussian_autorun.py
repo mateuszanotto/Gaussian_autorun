@@ -132,12 +132,11 @@ g09 < {name}_input_{n}.com > {path}/log/{name}_molecule_{n}.log'''.format(name=s
     #            None
 
     def test(self):
-        for n in range(len(self.smiles)):
-            smi_opt = (pybel.readfile('log', '{path}/log/{name}_molecule_{n}.log'.format(path=self.path, name=self.name, n=n)))
-            if str(self.smiles[n]) == str(smi_opt):
-                print('igual')
-            else:
-                print('fail')
+        if self.name != 'opt'
+            for n in range(len(self.smiles)):
+                opt_xyz = (pybel.readfile('log', '{path}/log/{name}_molecule_{n}.log'.format(path=self.path, name=self.name, n=n)))
+                output = pybel.Outputfile('xyz', 'input/{name}_input_{n}.com'.format(name=self.name, n=n), overwrite=True)
+                output.write(opt_xyz)
 
     def compare(self, other):
         try:
