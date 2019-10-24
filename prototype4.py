@@ -12,6 +12,7 @@ import Gaussian_autorun as ga
 from pathlib import Path
 import os
 path = os.getcwd()
+path2 = Path(path)
 
 ## define o caminho até a pasta e o cálculo
 name = 'opt'
@@ -21,9 +22,10 @@ calc = ['8', #processadores
 
 
 opt = ga.Gaussian_autorun(path, name, calc)
-opt.OptInputs() #cria o arquivo a partir do smile e otimiza, NÃO usar OtherInputs()
-opt.Run() #so funciona se não tiver .log
-opt.Error()
+#opt.Inputs() #cria o arquivo a partir do smile e otimiza, NÃO usar OtherInputs()
+#opt.Run() #so funciona se não tiver .log
+# opt.Error()
+
 
 print('==============================')
 
@@ -34,9 +36,9 @@ calc = ['8', #processadores
 
 
 freq = ga.Gaussian_autorun(path, name, calc)
-freq.OtherInputs() #cria o arquivo a partir da estrutura otimizada, NÃO usar OptInputs()
-freq.Run()
-freq.Error()
+#freq.Inputs() #cria o arquivo a partir da estrutura otimizada, NÃO usar OptInputs()
+#freq.Run()
+# freq.Error()
 
 print('==============================')
 
@@ -47,6 +49,9 @@ calc = ['8', #processadores
 
 
 sp = ga.Gaussian_autorun(path, name, calc)
-sp.OtherInputs() #cria o arquivo a partir da estrutura otimizada, NÃO usar OptInputs()
-sp.Run()
-sp.Error()
+#sp.Inputs() #cria o arquivo a partir da estrutura otimizada, NÃO usar OptInputs()
+#sp.Run()
+#sp.Error()
+
+print(type(path))
+print(type(path2))
