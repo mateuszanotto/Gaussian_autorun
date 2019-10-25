@@ -37,6 +37,16 @@ class Gaussian_autorun():
         self.error = []
         self.smiles = list(pybel.readfile('smi', '{}/smiles.smi'.format(path)))
 
+    def output(self, n):
+        self.output = ('',
+        '',
+        '',
+        ''
+        )
+        a = self.output
+        del self.output
+        return a
+
     def header(self, n):
         self.header = (('%nprocs={calc[0]}'.format(calc=self.calc)  + '\n'),
         ('%mem={calc[1]}GB'.format(calc=self.calc) + '\n'),
@@ -69,13 +79,12 @@ class Gaussian_autorun():
 
                 try:
                     os.mkdir(self.path+"/input")
-                except FileExistsError:
-                      output = pybel.Outputfile('xyz', 'input/{name}_input_{n}.com'.format(name=self.name, n=n), overwrite=True)
-                      output.write(smi)
-
+                except:
+                    output = pybel.Outputfile('xyz', 'input/{name}_input_{n}.com'.format(name=self.name, n=n), overwrite=True)
+                    output.write(smi)
                 finally:
-                     output = pybel.Outputfile('xyz', 'input/{name}_input_{n}.com'.format(name=self.name, n=n), overwrite=True)
-                     output.write(smi)
+                    output = pybel.Outputfile('xyz', 'input/{name}_input_{n}.com'.format(name=self.name, n=n), overwrite=True)
+                    output.write(smi)
 
             elif (str(self.name) != 'opt'):
                 for molecule in pybel.readfile('g09', '{path}/log/opt_molecule_{n}.log'.format(path=self.path, name=self.name, n=n)):
@@ -125,10 +134,10 @@ class Gaussian_autorun():
             with open('{path}/log/{name}_molecule_{n}.log'.format(path=self.path, name=self.name,  n=n), 'r') as file:
                 normterm = str(file.readlines())
                 self.normal.append(len(list(re.finditer('Normal termination of Gaussian 09', normterm))))
-                self.error.append(len(list(re.finditer('Error termination', normterm))))
+#                self.error.append(len(list(re.finditer('Error termination', normterm))))
                 if self.normal==0:
                     print('\nMolecule {n} error termination'.format(n=n))
-        if sum(self.normal)!=len(self.normal):
+        if sum(self.normal)<len(self.normal):
             print('\n- ERROR TERMINATION ON {name} (ﾉ｀□´)ﾉ⌒┻━┻ - \n'.format(name=self.name))
             print('List of {name} Error terminations:'.format(name=self.name))
             for n in range(len(self.smiles)):
@@ -137,8 +146,44 @@ class Gaussian_autorun():
             print('\n┬─┬ノ(ಠ_ಠノ)')
         elif sum(self.normal)==len(self.normal):
             print('\n {self} Normal terminated ʕᵔᴥᵔʔ\n '.format(self=self.name)) # mostrar erros e normal terminations
+        elif sum(self.normal)>len(self.normal):
+            print('\n {self} Normal terminated ʕᵔᴥᵔʔ *Normal termination > 1 per file*\n '.format(self=self.name)) # mostrar erros e normal terminations
 
-    #def LogRead(self, infos): # lê as infos no .log e salva em um arquivo
+
+    def LogRead(self): # lê as infos no .log e salva em um arquivo
+#    https://docs.python.org/3.1/tutorial/datastructures.html
+        for n in range(len(self.smiles)):
+            try:
+                os.mkdir(self.path+"/xyz")
+            except:
+                for molecule in pybel.readfile('g09', '{path}/log/opt_molecule_{n}.log'.format(path=self.path, name=self.name, n=n)):
+                    #print(molecule.molwt) molecule weigth mass
+                    output = pybel.Outputfile('xyz', 'xyz/data_{n}.xyz'.format(n=n), overwrite=True)
+                    output.write(molecule)
+            finally:
+                for molecule in pybel.readfile('g09', '{path}/log/opt_molecule_{n}.log'.format(path=self.path, name=self.name, n=n)):
+                    #print(molecule.molwt) molecule weigth mass
+                    output = pybel.Outputfile('xyz', 'xyz/data_{n}.xyz'.format(n=n), overwrite=True)
+                    output.write(molecule)
+
+            with open('log/{name}_molecule_{n}.log'.format(name=self.name, n=n), 'r') as file:
+                lines = file.readlines()
+                print (lines)
+                if str(self.name) == 'sp':
+                    i = 'energy'
+                    x=1
+                    energy = next(i for i in lines if x>0)
+                    print(energy)###
+
+
+
+
+
+
+            #with open('xyz/data_{n}.xyz'.format(n=n), 'w') as file:
+
+
+
 
     def compare(self, other):
         try:
