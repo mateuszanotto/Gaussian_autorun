@@ -72,8 +72,10 @@ class Gaussian_autorun():
     def Inputs(self):
         '''turn smiles.smi into 3D structures and save in a file
         '''
+
         for n in range(len(self.smiles)):
-            if (str(self.name) == 'opt'):
+            word = 'opt'
+            if word in self.calc[2].lower().split():
                 smi = self.smiles[n]
                 smi.make3D(forcefield='mmff94', steps=50)
 
@@ -86,7 +88,7 @@ class Gaussian_autorun():
                     output = pybel.Outputfile('xyz', 'input/{name}_input_{n}.com'.format(name=self.name, n=n), overwrite=True)
                     output.write(smi)
 
-            elif (str(self.name) != 'opt'):
+            else:
                 for molecule in pybel.readfile('g09', '{path}/log/opt_molecule_{n}.log'.format(path=self.path, name=self.name, n=n)):
                     #print(molecule.molwt) molecule weigth mass
                     output = pybel.Outputfile('xyz', 'input/{name}_input_{n}.com'.format(name=self.name, n=n), overwrite=True)
