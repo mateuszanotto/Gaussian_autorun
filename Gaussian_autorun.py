@@ -47,13 +47,22 @@ class Gaussian_autorun():
         del self.output
         return a
 
+    def contaMais(self, n):
+        count = 0
+        for word in list(str(self.smiles[n])):
+            if word == '+':
+                count += 1
+            elif word == '-':
+                count -= 1
+        return count
+
     def header(self, n):
         self.header = (('%nprocs={calc[0]}'.format(calc=self.calc)  + '\n'),
         ('%mem={calc[1]}GB'.format(calc=self.calc) + '\n'),
         ('%chk={path}/chk/{name}_molecule_{n}.chk'.format(name=self.name, path=self.path , n=n)  + '\n'),
         (self.calc[2])  + '\n',
         ('\nmolecule_{n} {smi}'.format(n=n, smi=self.smiles[n])  + '\n'),
-        ('0 1'),
+        ('cd {path}/input'.format(path=self.path)),
         ('#!/bin/bash'),
         ('cd {path}/input'.format(path=self.path)),
         ('g09 < {name}_input_{n}.com > {path}/log/{name}_molecule_{n}.log &&'.format(name=self.name, path=self.path, n=n)),
