@@ -62,7 +62,7 @@ class Gaussian_autorun():
         ('%chk={path}/chk/{name}_molecule_{n}.chk'.format(name=self.name, path=self.path , n=n)  + '\n'),
         (self.calc[2])  + '\n',
         ('\nmolecule_{n} {smi}'.format(n=n, smi=self.smiles[n])  + '\n'),
-        ('cd {path}/input'.format(path=self.path)),
+        ('{charge} 1'.format(charge=self.contaMais(n))),
         ('#!/bin/bash'),
         ('cd {path}/input'.format(path=self.path)),
         ('g09 < {name}_input_{n}.com > {path}/log/{name}_molecule_{n}.log &&'.format(name=self.name, path=self.path, n=n)),
@@ -83,7 +83,7 @@ class Gaussian_autorun():
         '''
 
         for n in range(len(self.smiles)):
-            word = 'opt'
+            word = 'opt' #ve se tem opt no input e calcula puxando do smile
             if word in self.calc[2].lower().split():
                 smi = self.smiles[n]
                 smi.make3D(forcefield='mmff94', steps=50)
