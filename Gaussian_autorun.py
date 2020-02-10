@@ -25,7 +25,7 @@ class Gaussian_autorun():
     #            outubro 2019            #        `\ \   /(_/ / / /
     #       smile -> input gaussian      #          ; `-`  (_/ / /
     #                                    #          |       (_/ /
-    #              patch 0.8.1           #          \          /
+    #              patch 0.8.2           #          \          /
     #           mateus m z toledo        #           )       /`
     ######################################           /      /`\n\n ''')
 
