@@ -99,7 +99,6 @@ class Gaussian_autorun():
 
             else:
                 for molecule in pybel.readfile('g09', '{path}/log/opt_molecule_{n}.log'.format(path=self.path, name=self.name, n=n)):
-                    #print(molecule.molwt) molecule weigth mass
                     output = pybel.Outputfile('xyz', 'input/{name}_input_{n}.com'.format(name=self.name, n=n), overwrite=True)
                     output.write(molecule)
 
@@ -192,9 +191,6 @@ class Gaussian_autorun():
 
 
             #with open('xyz/data_{n}.xyz'.format(n=n), 'w') as file:
-
-
-
 
     def compare(self, other):
         try:
